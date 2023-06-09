@@ -1,3 +1,8 @@
+package runtime;
+
+import instructions.Block;
+import instructions.Instruction;
+
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -8,7 +13,7 @@ import java.util.Stack;
     call .run()
  */
 
-class Debugger {
+public class Debugger {
     private final Scanner scanner;
     private final Stack<Instruction> stack;
     private final Stack<Block> blockStack;

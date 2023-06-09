@@ -1,3 +1,6 @@
+package instructions;
+
+import runtime.Debugger;
 
 public abstract class Instruction {
 
@@ -6,9 +9,9 @@ public abstract class Instruction {
     /*
         An array of 26 references to blocks where corresponding variables were declared
      */
-    protected Block[] blockRefs;
+    public Block[] blockRefs;
 
-    boolean isCompleted() {
+    public boolean isCompleted() {
         return isCompleted;
     }
 
@@ -31,7 +34,7 @@ public abstract class Instruction {
 
         blockRef is reference to a block where instruction is executed
      */
-    abstract Instruction exec(Block blockRef);
+    public abstract Instruction exec(Block blockRef);
 
     /*
         Returns a copy of the instruction

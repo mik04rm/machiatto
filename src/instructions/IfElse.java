@@ -1,3 +1,7 @@
+package instructions;
+
+import expressions.Expr;
+
 public class IfElse extends Instruction {
     private final Expr expr1;
     private final Expr expr2;
@@ -13,7 +17,7 @@ public class IfElse extends Instruction {
         this.instr2 = instr2;
     }
 
-    Instruction exec(Block blockRef) {
+    public Instruction exec(Block blockRef) {
         isCompleted = true;
         boolean compResult;
         int ev1 = expr1.value(blockRef);

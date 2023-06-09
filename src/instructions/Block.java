@@ -1,3 +1,7 @@
+package instructions;
+
+import runtime.Debugger;
+
 public class Block extends Instruction {
     private final Declaration[] declarSeq;
     private final Instruction[] instrSeq;
@@ -15,7 +19,7 @@ public class Block extends Instruction {
     private int iter;
 
 
-    Instruction exec(Block blockRef) {
+    public Instruction exec(Block blockRef) {
         assert iter < declarSeq.length + instrSeq.length;
         Instruction ret;
         if (iter < declarSeq.length) {

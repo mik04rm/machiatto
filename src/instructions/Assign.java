@@ -1,3 +1,7 @@
+package instructions;
+
+import expressions.Expr;
+
 public class Assign extends Instruction {
     private final char varName;
     private final Expr expr;

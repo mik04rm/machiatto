@@ -1,3 +1,5 @@
+package expressions;
+
 public class Multiplication extends ExprTwoArg {
     public Multiplication(Expr left, Expr right) {
         super(left, right);

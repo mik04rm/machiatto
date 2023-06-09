@@ -1,3 +1,7 @@
+import expressions.*;
+import instructions.*;
+import runtime.Debugger;
+
 public class Main {
 
     static Block prog1() {

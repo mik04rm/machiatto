@@ -1,3 +1,7 @@
+package instructions;
+
+import expressions.Expr;
+
 public class Declaration extends Instruction {
     private final char name;
     private final Expr expr;
@@ -6,7 +10,7 @@ public class Declaration extends Instruction {
         this.name = name;
         this.expr = expr;
     }
-    Instruction exec(Block blockRef) {
+    public Instruction exec(Block blockRef) {
         isCompleted = true;
         assert blockRef != null;
         blockRef.blockRefs[name - 'a'] = blockRef;

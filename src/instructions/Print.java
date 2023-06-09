@@ -1,3 +1,7 @@
+package instructions;
+
+import expressions.Expr;
+
 public class Print extends Instruction {
     private final Expr expr;
 
