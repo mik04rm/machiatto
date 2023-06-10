@@ -2,10 +2,14 @@ package instructions;
 
 import runtime.Debugger;
 
+import java.util.HashMap;
+
 public class Block extends Instruction {
     private final Declaration[] declarSeq;
     private final Instruction[] instrSeq;
     private final int[] varValues;
+
+    private final HashMap<String, Instruction> procedureInstructions;
 
     public int getVarValue(char name) {
         return blockRefs[name - 'a'].varValues[name - 'a'];
@@ -13,6 +17,14 @@ public class Block extends Instruction {
 
     public void setVarValue(char name, int value) {
         blockRefs[name - 'a'].varValues[name - 'a'] = value;
+    }
+
+    public void setProcedureInstruction(String name, Instruction instr) {
+        procedureInstructions.put(name, instr);
+    }
+
+    public Instruction getProcedureInstruction(String name) {
+        return procedureInstructions.get(name);
     }
 
     //index of the block sub-instruction which will be returned next by 'exec'
@@ -39,6 +51,7 @@ public class Block extends Instruction {
     public Block(Declaration[] declarSeq, Instruction[] instrSeq) {
         blockRefs = new Block[26];
         varValues = new int[26];
+        procedureInstructions = new HashMap<>();
         this.declarSeq = declarSeq;
         this.instrSeq = instrSeq;
         iter = 0;
