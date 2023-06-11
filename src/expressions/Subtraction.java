@@ -5,6 +5,10 @@ public class Subtraction extends ExprTwoArg {
         super(left, right);
     }
 
+    static public Subtraction of(Expr left, Expr right) {
+        return new Subtraction(left, right);
+    }
+
     protected int operation(int left, int right) {
         return left - right;
     }

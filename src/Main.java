@@ -82,9 +82,9 @@ public class Main {
 
     static Block progWithBuilder() {
         return new BlockBuilder()
-                .declareVariable('a', new Value(3))
-                .declareVariable('b', new Addition(new Variable('a'), new Value(2)))
-                .print(new Multiplication(new Variable('a'), new Variable('b')))
+                .declareVariable('a', Value.of(3))
+                .declareVariable('b', Addition.of(Variable.named('a'), Value.of(2)))
+                .print(new Multiplication(Variable.named('a'), Variable.named('b')))
                 .build();
     }
 
@@ -95,8 +95,8 @@ public class Main {
 //        dbg.run();
 //        dbg.continueSteps();
 
-        Block prog = progWithBuilder();
-        Debugger dbg = new Debugger(prog);
+        Block progg = progWithBuilder();
+        Debugger dbg = new Debugger(progg);
         dbg.run();
     }
 }

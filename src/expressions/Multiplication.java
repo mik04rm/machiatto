@@ -5,6 +5,10 @@ public class Multiplication extends ExprTwoArg {
         super(left, right);
     }
 
+    static public Multiplication of(Expr left, Expr right) {
+        return new Multiplication(left, right);
+    }
+
     protected int operation(int left, int right) {
         return left * right;
     }
