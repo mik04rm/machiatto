@@ -91,7 +91,7 @@ public class Debugger {
         }
         Block blockRef = blockStack.elementAt(blockStack.size() - 1 - k);
         for (int i = 0; i < 26; i++) {
-            if (blockRef.blockRefs[i] != null) {
+            if (blockRef.varBlockRefs[i] != null) {
                 System.out.printf("%c: %d%n", i + 'a', blockRef.getVarValue((char)(i + 'a')));
             }
         }

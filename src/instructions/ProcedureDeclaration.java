@@ -2,6 +2,9 @@ package instructions;
 
 import java.util.ArrayList;
 
+//TODO Każda konstrukcja składniowa języka Macchiato 1.1 powinna być uzupełniona jednym testem.
+//TODO Deklaracje procedur powinny być w ciągu deklaracji? To znaczy jakoś na początku bloku.
+
 public class ProcedureDeclaration extends Instruction {
 
     private final String name;
@@ -14,16 +17,14 @@ public class ProcedureDeclaration extends Instruction {
         this.instr = instr;
     }
 
-    @Override
     public Instruction exec(Block blockRef) {
         isCompleted = true;
-        blockRef.procedureBlockRefs.put(name, blockRef);
-        blockRef.setProcedureInstruction(name, instr);
+        blockRef.procBlockRefs.put(name, blockRef);
+        blockRef.setProcedure(name, instr, argNames);
         return null;
     }
 
-    @Override
-    public Instruction clone() {
-        return null;
+    public ProcedureDeclaration clone() {
+        return new ProcedureDeclaration(name, argNames, instr);
     }
 }

@@ -2,6 +2,7 @@ package instructions;
 
 import expressions.Expr;
 
+//TODO name can be changed to VariableDeclaration
 public class Declaration extends Instruction {
     private final char name;
     private final Expr expr;
@@ -13,7 +14,7 @@ public class Declaration extends Instruction {
     public Instruction exec(Block blockRef) {
         isCompleted = true;
         assert blockRef != null;
-        blockRef.blockRefs[name - 'a'] = blockRef;
+        blockRef.varBlockRefs[name - 'a'] = blockRef;
         blockRef.setVarValue(name, expr.value(blockRef));
         return null;
     }

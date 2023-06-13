@@ -9,22 +9,27 @@ public class Block extends Instruction {
     private final Instruction[] instrSeq;
     private final int[] varValues;
 
-    private final HashMap<String, Instruction> procedureInstructions;
+    private final HashMap<String, Instruction> procedureInstruction;
+    private final HashMap<String, char[]> procedureArgNames;
 
     public int getVarValue(char name) {
-        return blockRefs[name - 'a'].varValues[name - 'a'];
+        return varBlockRefs[name - 'a'].varValues[name - 'a'];
     }
 
     public void setVarValue(char name, int value) {
-        blockRefs[name - 'a'].varValues[name - 'a'] = value;
+        varBlockRefs[name - 'a'].varValues[name - 'a'] = value;
     }
 
-    public void setProcedureInstruction(String name, Instruction instr) {
-        procedureInstructions.put(name, instr);
+    public void setProcedure(String name, Instruction instr, char[] argNames) {
+        procedureInstruction.put(name, instr);
+        procedureArgNames.put(name, argNames);
     }
 
     public Instruction getProcedureInstruction(String name) {
-        return procedureInstructions.get(name);
+        return procedureInstruction.get(name);
+    }
+    public char[] getProcedureArgNames(String name) {
+        return procedureArgNames.get(name);
     }
 
     //index of the block sub-instruction which will be returned next by 'exec'
@@ -43,15 +48,17 @@ public class Block extends Instruction {
         if (iter == declarSeq.length + instrSeq.length) {
             isCompleted = true;
         }
-        ret.setBlockRefs(blockRefs);
-
+        ret.setVarBlockRefs(varBlockRefs);
+        ret.setProcBlockRefs(procBlockRefs);
         return ret;
     }
 
     public Block(Declaration[] declarSeq, Instruction[] instrSeq) {
-        blockRefs = new Block[26];
+        varBlockRefs = new Block[26];
         varValues = new int[26];
-        procedureInstructions = new HashMap<>();
+        procBlockRefs = new HashMap<>();
+        procedureInstruction = new HashMap<>();
+        procedureArgNames = new HashMap<>();
         this.declarSeq = declarSeq;
         this.instrSeq = instrSeq;
         iter = 0;

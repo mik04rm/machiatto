@@ -37,10 +37,12 @@ public class IfElse extends Instruction {
 
         //After calculating a boolean value of the condition we choose which if-else branch to return
         if (compResult) {
-            instr1.setBlockRefs(blockRefs);
+            instr1.setVarBlockRefs(varBlockRefs);
+            instr1.setProcBlockRefs(procBlockRefs);
             return instr1;
         } else {
-            instr2.setBlockRefs(blockRefs);
+            instr2.setVarBlockRefs(varBlockRefs);
+            instr2.setProcBlockRefs(procBlockRefs);
             return instr2;
         }
     }
