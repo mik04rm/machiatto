@@ -1,6 +1,7 @@
 import expressions.*;
 import instructions.*;
 import runtime.Debugger;
+import builder.BlockBuilder;
 
 public class Main {
 
@@ -79,11 +80,23 @@ public class Main {
         return prog;
     }
 
+    static Block progWithBuilder() {
+        return new BlockBuilder()
+                .declareVariable('a', Value.of(3))
+                .declareVariable('b', Addition.of(Variable.named('a'), Value.of(2)))
+                .print(new Multiplication(Variable.named('a'), Variable.named('b')))
+                .build();
+    }
+
     public static void main(String[] args) {
 
-        Block prog_pierwsze = prog_pierwsze();
-        Debugger dbg = new Debugger(prog_pierwsze);
-        dbg.run();
+//        Block prog_pierwsze = prog_pierwsze();
+//        Debugger dbg = new Debugger(prog_pierwsze);
+//        dbg.run();
 //        dbg.continueSteps();
+
+        Block progg = progWithBuilder();
+        Debugger dbg = new Debugger(progg);
+        dbg.run();
     }
 }

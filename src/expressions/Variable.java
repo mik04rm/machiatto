@@ -9,6 +9,10 @@ public class Variable extends Expr {
         this.name = name;
     }
 
+    static public Variable named(char name) {
+        return new Variable(name);
+    }
+
     public int value(Block blockRef) {
         assert blockRef != null;
         return blockRef.getVarValue(name);

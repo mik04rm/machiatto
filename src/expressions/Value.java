@@ -9,6 +9,10 @@ public class Value extends Expr {
         this.val = val;
     }
 
+    static public Value of(int val) {
+        return new Value(val);
+    }
+
     public int value(Block blockRef) {
         return val;
     }
