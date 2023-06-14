@@ -3,15 +3,16 @@ package instructions;
 import runtime.Debugger;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Block extends Instruction {
-    private final Declaration[] declarSeq;
+    private final Instruction[] declarSeq;
     private final Instruction[] instrSeq;
     private final int[] varValues;
 
-    private final HashMap<String, Instruction> procedureInstruction;
+    private final Map<String, Instruction> procedureInstructions;
 
-    private final HashMap<String, char[]> procedureArgNames;
+    private final Map<String, char[]> procedureArgNames;
 
     public boolean varExists(char name) {
         return varBlockRefs[name] != null;
@@ -26,15 +27,15 @@ public class Block extends Instruction {
     }
 
     protected void setProcedure(String name, Instruction instr, char[] argNames) {
-        procedureInstruction.put(name, instr);
+        procedureInstructions.put(name, instr);
         procedureArgNames.put(name, argNames);
     }
 
-    public Instruction getProcedureInstruction(String name) {
-        return procedureInstruction.get(name);
+    protected Instruction getProcedureInstruction(String name) {
+        return procedureBlockRefs.get(name).procedureInstructions.get(name);
     }
-    public char[] getProcedureArgNames(String name) {
-        return procedureArgNames.get(name);
+    protected char[] getProcedureArgNames(String name) {
+        return procedureBlockRefs.get(name).procedureArgNames.get(name);
     }
 
     //index of the block sub-instruction which will be returned next by 'exec'
@@ -53,16 +54,16 @@ public class Block extends Instruction {
         if (iter == declarSeq.length + instrSeq.length) {
             isCompleted = true;
         }
-        ret.copyVarBlockRefs(varBlockRefs);
-        ret.copyProcBlockRefs(procBlockRefs);
+        ret.setVarBlockRefs(varBlockRefs);
+        ret.setProcedureBlockRefs(procedureBlockRefs);
         return ret;
     }
 
-    public Block(Declaration[] declarSeq, Instruction[] instrSeq) {
+    public Block(Instruction[] declarSeq, Instruction[] instrSeq) {
         varBlockRefs = new Block[26];
         varValues = new int[26];
-        procBlockRefs = new HashMap<>();
-        procedureInstruction = new HashMap<>();
+        procedureBlockRefs = new HashMap<>();
+        procedureInstructions = new HashMap<>();
         procedureArgNames = new HashMap<>();
         this.declarSeq = declarSeq;
         this.instrSeq = instrSeq;
@@ -77,7 +78,7 @@ public class Block extends Instruction {
     }
 
     public Block clone() {
-        Declaration[] declarSeq_clone = new Declaration[declarSeq.length];
+        Instruction[] declarSeq_clone = new VarDeclaration[declarSeq.length];
         for (int i = 0; i < declarSeq.length; i++) {
             declarSeq_clone[i] = declarSeq[i].clone();
         }

@@ -28,16 +28,16 @@ public class For extends Instruction {
         //If for has 0 iterations in total we set isCompleted to true and return empty block
         if (curIter >= iterNum) {
             isCompleted = true;
-            return new Block(new Declaration[]{}, new Instruction[]{});
+            return new Block(new VarDeclaration[]{}, new Instruction[]{});
         }
 
         //Iterator declaration and instruction are wrapped in block
         Block retBlock = new Block(
-                new Declaration[]{new Declaration(iteratorName, new Value(curIter))},
+                new VarDeclaration[]{new VarDeclaration(iteratorName, new Value(curIter))},
                 new Instruction[]{instr.clone()}
         );
-        retBlock.copyVarBlockRefs(varBlockRefs);
-        retBlock.copyProcBlockRefs(procBlockRefs);
+        retBlock.setVarBlockRefs(varBlockRefs);
+        retBlock.setProcedureBlockRefs(procedureBlockRefs);
         curIter++;
         return retBlock;
     }

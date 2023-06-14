@@ -6,9 +6,9 @@ import builder.BlockBuilder;
 public class Main {
 
     static Block prog1() {
-        Declaration[] dseq = new Declaration[3];
+        VarDeclaration[] dseq = new VarDeclaration[3];
         for (int i = 0; i < 3; i++) {
-            dseq[i] = new Declaration((char) ('a' + i), new Value(i));
+            dseq[i] = new VarDeclaration((char) ('a' + i), new Value(i));
         }
         Instruction[] iseq = new Instruction[8];
 
@@ -37,7 +37,7 @@ public class Main {
                         new Value(3)),
                 new Print(new Variable('i')));
 
-        Declaration[] p_dseq = { new Declaration('d', new Value(10)) };
+        VarDeclaration[] p_dseq = { new VarDeclaration('d', new Value(10)) };
         Instruction[] p_iseq = { new Print(new Variable('d')), b, forek };
 
         return new Block(p_dseq, p_iseq);
@@ -45,12 +45,12 @@ public class Main {
     }
 
     static Block prog_pierwsze() {
-        Declaration dn = new Declaration('n', new Value(30));
+        VarDeclaration dn = new VarDeclaration('n', new Value(30));
 
         Assign assk = new Assign('k', new Addition(new Variable('k'), new Value(2)));
 
-        Block emptyBlock1 = new Block(new Declaration[]{}, new Instruction[]{});
-        Block emptyBlock2 = new Block(new Declaration[]{}, new Instruction[]{});
+        Block emptyBlock1 = new Block(new VarDeclaration[]{}, new Instruction[]{});
+        Block emptyBlock2 = new Block(new VarDeclaration[]{}, new Instruction[]{});
         Assign assi = new Assign('i', new Addition(new Variable('i'), new Value(2)));
         Assign assp = new Assign('p', new Value(0));
         IfElse mif = new IfElse(new Modulo(new Variable('k'), new Variable('i')),
@@ -60,12 +60,12 @@ public class Main {
                                 emptyBlock1
         );
         IfElse dif = new IfElse(new Variable('p'), new Value(1), "=", new Print(new Variable('k')), emptyBlock2);
-        Block b_mforek = new Block(new Declaration[]{}, new Instruction[]{ assi, mif });
+        Block b_mforek = new Block(new VarDeclaration[]{}, new Instruction[]{ assi, mif });
         For mforek = new For('i', new Subtraction(new Variable('k'), new Value(2)), b_mforek);
 
 
         Block b_forek = new Block(
-                new Declaration[]{ new Declaration('p', new Value(1)) },
+                new VarDeclaration[]{ new VarDeclaration('p', new Value(1)) },
                 new Instruction[]{ assk, mforek, dif }
         );
 
@@ -73,7 +73,7 @@ public class Main {
         For forek = new For('k', new Subtraction(new Variable('n'), new Value(1)), b_forek);
 
         Block prog = new Block(
-                new Declaration[]{ dn },
+                new VarDeclaration[]{ dn },
                 new Instruction[]{ forek }
         );
 
@@ -105,14 +105,29 @@ public class Main {
                         .build()
                 )
                 .build();
+    }
 
+    static Block xd() {
+        return new BlockBuilder()
+                .declareVariable('x', Value.of(3))
+                .block(new BlockBuilder()
+                        .declareVariable('x', Value.of(5))
+                        .build()
+                )
+                .print(Variable.named('x'))
+                .build();
     }
 
     public static void main(String[] args) {
 
+//        Block xd = xd();
+//        Debugger dbg = new Debugger(xd);
+////        dbg.run();
+//        dbg.continueSteps();
+
 //        Block prog_pierwsze = prog_pierwsze();
 //        Debugger dbg = new Debugger(prog_pierwsze);
-//        dbg.run();
+////        dbg.run();
 //        dbg.continueSteps();
 
         Block progg = progWithBuilder2();

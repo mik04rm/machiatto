@@ -3,6 +3,7 @@ package instructions;
 import runtime.Debugger;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Instruction {
 
@@ -13,7 +14,7 @@ public abstract class Instruction {
     protected Block[] varBlockRefs;
 
     /* mapping name -> block where procedure of this name has been declared */
-    protected HashMap<String, Block> procBlockRefs;
+    protected Map<String, Block> procedureBlockRefs;
 
     public boolean isCompleted() {
         return isCompleted;
@@ -22,13 +23,13 @@ public abstract class Instruction {
     /*
         Passes a copy of blockRefs
      */
-    protected void copyVarBlockRefs(Block[] varBlockRefs) {
+    protected void setVarBlockRefs(Block[] varBlockRefs) {
         this.varBlockRefs = varBlockRefs.clone();
     }
 
-    protected void copyProcBlockRefs(HashMap<String, Block> procBlockRefs) {
+    protected void setProcedureBlockRefs(Map<String, Block> procBlockRefs) {
         /* cloning using HashMap constructor */
-        this.procBlockRefs = new HashMap<>(procBlockRefs);
+        this.procedureBlockRefs = new HashMap<>(procBlockRefs);
     }
 
     public void pushSelf(Debugger dbg) {

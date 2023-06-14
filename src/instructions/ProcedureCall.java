@@ -4,7 +4,6 @@ import expressions.Expr;
 
 public class ProcedureCall extends Instruction {
 
-
     private final String name;
     private final Expr[] argExpr;
 
@@ -16,19 +15,19 @@ public class ProcedureCall extends Instruction {
     public Instruction exec(Block blockRef) {
         isCompleted = true;
 
-        Instruction procInstr = blockRef.procBlockRefs.get(name).getProcedureInstruction(name); //TODO brzydko
-        char[] procArgNames = blockRef.procBlockRefs.get(name).getProcedureArgNames(name);
-        assert argExpr.length == procArgNames.length;
+        Instruction procInstr = blockRef.getProcedureInstruction(name);
+        char[] procedureArgNames = blockRef.getProcedureArgNames(name);
+        assert argExpr.length == procedureArgNames.length;
         //TODO wypadałoby jakiś wyjątek rzucić?
 
         int argNum = argExpr.length;
-        Declaration[] argDeclarations = new Declaration[argNum];
+        VarDeclaration[] argDeclarations = new VarDeclaration[argNum];
         for (int i = 0; i < argNum; i++) {
-            argDeclarations[i] = new Declaration(procArgNames[i], argExpr[i]);
+            argDeclarations[i] = new VarDeclaration(procedureArgNames[i], argExpr[i]);
         }
         Block retBlock = new Block(argDeclarations, new Instruction[]{ procInstr.clone() });
-        retBlock.copyVarBlockRefs(blockRef.varBlockRefs); //TODO no brzydko chyba
-        retBlock.copyProcBlockRefs(blockRef.procBlockRefs); //TODO j.w.
+        retBlock.setVarBlockRefs(blockRef.varBlockRefs);
+        retBlock.setProcedureBlockRefs(blockRef.procedureBlockRefs);
         return retBlock;
     }
 

@@ -2,12 +2,11 @@ package instructions;
 
 import expressions.Expr;
 
-//TODO name can be changed to VariableDeclaration
-public class Declaration extends Instruction {
+public class VarDeclaration extends Instruction {
     private final char name;
     private final Expr expr;
 
-    public Declaration(char name, Expr expr) {
+    public VarDeclaration(char name, Expr expr) {
         this.name = name;
         this.expr = expr;
     }
@@ -19,7 +18,7 @@ public class Declaration extends Instruction {
         return null;
     }
 
-    public Declaration clone() {
-        return new Declaration(name, expr);
+    public VarDeclaration clone() {
+        return new VarDeclaration(name, expr);
     }
 }
