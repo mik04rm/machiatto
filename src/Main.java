@@ -88,6 +88,26 @@ public class Main {
                 .build();
     }
 
+    static Block progWithBuilder2() {
+        return new BlockBuilder()
+                .declareVariable('x', Value.of(101))
+                .declareVariable('y', Value.of(1))
+                .declareProcedure("out", new char[]{'a'}, new BlockBuilder()
+                        .print(Addition.of(Variable.named('a'), Variable.named('x')))
+                        .build()
+                )
+                .assign('x', Subtraction.of(Variable.named('x'), Variable.named('y')))
+                .callProcedure("out", new Expr[]{ Variable.named('x') })
+                .callProcedure("out", new Expr[]{ Value.of(100) })
+                .block(new BlockBuilder()
+                        .declareVariable('x', Value.of(10))
+                        .callProcedure("out", new Expr[]{ Value.of(100) })
+                        .build()
+                )
+                .build();
+
+    }
+
     public static void main(String[] args) {
 
 //        Block prog_pierwsze = prog_pierwsze();
@@ -95,8 +115,8 @@ public class Main {
 //        dbg.run();
 //        dbg.continueSteps();
 
-        Block progg = progWithBuilder();
+        Block progg = progWithBuilder2();
         Debugger dbg = new Debugger(progg);
-        dbg.run();
+        dbg.continueSteps();
     }
 }

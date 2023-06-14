@@ -90,9 +90,9 @@ public class Debugger {
             return;
         }
         Block blockRef = blockStack.elementAt(blockStack.size() - 1 - k);
-        for (int i = 0; i < 26; i++) {
-            if (blockRef.varBlockRefs[i] != null) {
-                System.out.printf("%c: %d%n", i + 'a', blockRef.getVarValue((char)(i + 'a')));
+        for (char c = 'a'; c <= 'z'; c++) {
+            if (blockRef.varExists(c)) {
+                System.out.printf("%c: %d%n", c, blockRef.getVarValue(c));
             }
         }
     }

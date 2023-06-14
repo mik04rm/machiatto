@@ -10,17 +10,22 @@ public class Block extends Instruction {
     private final int[] varValues;
 
     private final HashMap<String, Instruction> procedureInstruction;
+
     private final HashMap<String, char[]> procedureArgNames;
+
+    public boolean varExists(char name) {
+        return varBlockRefs[name] != null;
+    }
 
     public int getVarValue(char name) {
         return varBlockRefs[name - 'a'].varValues[name - 'a'];
     }
 
-    public void setVarValue(char name, int value) {
+    protected void setVarValue(char name, int value) {
         varBlockRefs[name - 'a'].varValues[name - 'a'] = value;
     }
 
-    public void setProcedure(String name, Instruction instr, char[] argNames) {
+    protected void setProcedure(String name, Instruction instr, char[] argNames) {
         procedureInstruction.put(name, instr);
         procedureArgNames.put(name, argNames);
     }
@@ -48,8 +53,8 @@ public class Block extends Instruction {
         if (iter == declarSeq.length + instrSeq.length) {
             isCompleted = true;
         }
-        ret.setVarBlockRefs(varBlockRefs);
-        ret.setProcBlockRefs(procBlockRefs);
+        ret.copyVarBlockRefs(varBlockRefs);
+        ret.copyProcBlockRefs(procBlockRefs);
         return ret;
     }
 

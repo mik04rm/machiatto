@@ -19,7 +19,7 @@ public class ProcedureDeclaration extends Instruction {
 
     public Instruction exec(Block blockRef) {
         isCompleted = true;
-        blockRef.procBlockRefs.put(name, blockRef);
+        blockRef.procBlockRefs.put(name, blockRef); //TODO jakos brzydko
         blockRef.setProcedure(name, instr, argNames);
         return null;
     }

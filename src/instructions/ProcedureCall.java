@@ -16,19 +16,20 @@ public class ProcedureCall extends Instruction {
     public Instruction exec(Block blockRef) {
         isCompleted = true;
 
-        Instruction procInstr = blockRef.getProcedureInstruction(name);
-        char[] procArgNames = blockRef.getProcedureArgNames(name);
+        Instruction procInstr = blockRef.procBlockRefs.get(name).getProcedureInstruction(name); //TODO brzydko
+        char[] procArgNames = blockRef.procBlockRefs.get(name).getProcedureArgNames(name);
         assert argExpr.length == procArgNames.length;
         //TODO wypadałoby jakiś wyjątek rzucić?
 
         int argNum = argExpr.length;
-
         Declaration[] argDeclarations = new Declaration[argNum];
         for (int i = 0; i < argNum; i++) {
             argDeclarations[i] = new Declaration(procArgNames[i], argExpr[i]);
         }
-
-        return new Block(argDeclarations, new Instruction[]{ procInstr }) ;
+        Block retBlock = new Block(argDeclarations, new Instruction[]{ procInstr.clone() });
+        retBlock.copyVarBlockRefs(blockRef.varBlockRefs); //TODO no brzydko chyba
+        retBlock.copyProcBlockRefs(blockRef.procBlockRefs); //TODO j.w.
+        return retBlock;
     }
 
     public ProcedureCall clone() {

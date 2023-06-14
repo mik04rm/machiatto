@@ -36,8 +36,8 @@ public class For extends Instruction {
                 new Declaration[]{new Declaration(iteratorName, new Value(curIter))},
                 new Instruction[]{instr.clone()}
         );
-        retBlock.setVarBlockRefs(varBlockRefs);
-        retBlock.setProcBlockRefs(procBlockRefs);
+        retBlock.copyVarBlockRefs(varBlockRefs);
+        retBlock.copyProcBlockRefs(procBlockRefs);
         curIter++;
         return retBlock;
     }

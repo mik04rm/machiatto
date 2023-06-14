@@ -10,10 +10,10 @@ public abstract class Instruction {
 
     /* An array of 26 references to blocks where corresponding variables were declared */
     /* mapping name -> block where variable of this name was delared */
-    public Block[] varBlockRefs;
+    protected Block[] varBlockRefs;
 
     /* mapping name -> block where procedure of this name has been declared */
-    public HashMap<String, Block> procBlockRefs;
+    protected HashMap<String, Block> procBlockRefs;
 
     public boolean isCompleted() {
         return isCompleted;
@@ -22,11 +22,11 @@ public abstract class Instruction {
     /*
         Passes a copy of blockRefs
      */
-    protected void setVarBlockRefs(Block[] varBlockRefs) {
+    protected void copyVarBlockRefs(Block[] varBlockRefs) {
         this.varBlockRefs = varBlockRefs.clone();
     }
 
-    protected void setProcBlockRefs(HashMap<String, Block> procBlockRefs) {
+    protected void copyProcBlockRefs(HashMap<String, Block> procBlockRefs) {
         /* cloning using HashMap constructor */
         this.procBlockRefs = new HashMap<>(procBlockRefs);
     }
