@@ -92,13 +92,13 @@ public class Main {
         return new BlockBuilder()
                 .declareVariable('x', Value.of(101))
                 .declareVariable('y', Value.of(1))
-                .declareProcedure("out", new char[]{'a'}, new BlockBuilder()
+                .declareProcedure("out", new char[]{'a'}, new BlockBuilder() //TODO mozna zmienic, zeby nazwy argumentow byly w List.of czy coś
                         .print(Addition.of(Variable.named('a'), Variable.named('x')))
                         .build()
                 )
                 .assign('x', Subtraction.of(Variable.named('x'), Variable.named('y')))
                 .callProcedure("out", new Expr[]{ Variable.named('x') })
-                .callProcedure("out", new Expr[]{ Value.of(100) })
+                .callProcedure("out", new Expr[]{ Value.of(100) }) //TODO tu jakoś podobnie
                 .block(new BlockBuilder()
                         .declareVariable('x', Value.of(10))
                         .callProcedure("out", new Expr[]{ Value.of(100) })
@@ -118,6 +118,16 @@ public class Main {
                 .build();
     }
 
+    static Block xdd() {
+        return new BlockBuilder()
+                .declareProcedure("p", new char[]{ 'a', 'b' }, new BlockBuilder().build())
+                .block(new BlockBuilder()
+                        .declareProcedure("p", new char[]{ 'x', 'y', 'z' }, new BlockBuilder().build())
+                        .build()
+                )
+                .build();
+    }
+
     public static void main(String[] args) {
 
 //        Block xd = xd();
@@ -125,13 +135,16 @@ public class Main {
 ////        dbg.run();
 //        dbg.continueSteps();
 
-//        Block prog_pierwsze = prog_pierwsze();
-//        Debugger dbg = new Debugger(prog_pierwsze);
-////        dbg.run();
-//        dbg.continueSteps();
-
-        Block progg = progWithBuilder2();
-        Debugger dbg = new Debugger(progg);
+        Block prog_pierwsze = prog_pierwsze();
+        Debugger dbg = new Debugger(prog_pierwsze);
         dbg.continueSteps();
+
+//        Block progg = progWithBuilder2();
+//        Debugger dbg = new Debugger(progg);
+//        dbg.run();
+
+//        Block xdd = xdd();
+//        Debugger dbg = new Debugger(xdd);
+//        dbg.run();
     }
 }

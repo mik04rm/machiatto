@@ -3,6 +3,10 @@ package runtime;
 import instructions.Block;
 import instructions.Instruction;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -39,7 +43,7 @@ public class Debugger {
     /*
         Does 'stepsNum' steps
         Where a step is a one simple instruction:
-        Declaration, Print, or Assign
+        VarDeclaration, ProcedureDeclaration, Print, or Assign
      */
     private void doSteps(long stepsNum) {
         for (int i = 0; i < stepsNum; i++) {
@@ -97,31 +101,67 @@ public class Debugger {
         }
     }
 
-    public void run() {
-        System.out.println("Debugger is running");
-        while (true) {
-            System.out.printf("> ");
-            String command = scanner.next();
-            if (command.length() > 1) {
-                System.out.println("Name of a command needs to be one letter");
-                continue;
+    private void dump(String outFilePath) throws IOException {
+        try (FileWriter writer = new FileWriter(outFilePath)) {
+
+            writer.write("PROCEDURES:\n");
+            Block blockRef = blockStack.elementAt(blockStack.size() - 1); //TODO moglismy juz wyjsc z najwyzszego blocku
+
+            for (String name : blockRef.getProceduresNames()) {
+                writer.write(name);
+                for (char argName : blockRef.getProcedureArgNames(name)) {
+                    writer.write(' ');
+                    writer.write(argName);
+                }
+                writer.write('\n');
             }
-            char c = command.charAt(0);
-            if (c == 'c') {
-                continueSteps();
-            } else if (c == 's') {
-                int stepsNum = scanner.nextInt();
-                doSteps(stepsNum);
-            } else if (c == 'd') {
-                int levelsUp = scanner.nextInt();
-                display(levelsUp);
-            } else if (c == 'e') {
-                System.out.println("Exiting debugger");
-                break;
-            } else {
-                System.out.println("Wrong command name");
+
+            writer.write("\nVARIABLES' VALUES:\n");
+
+            for (char c = 'a'; c <= 'z'; c++) {
+                if (blockRef.varExists(c)) {
+                    writer.write(String.format("%c: %d%n", c, blockRef.getVarValue(c)));
+                }
             }
         }
 
+        System.out.println("Successfully wrote to the file " + outFilePath + ".");
+
+    }
+
+    public void run() {
+        System.out.println("Debugger is running!");
+        while (true) {
+            try {
+                System.out.printf("> ");
+                String command = scanner.next();
+                if (command.length() > 1) {
+                    System.out.println("Name of a command needs to be one letter");
+                    continue;
+                }
+                char c = command.charAt(0);
+                if (c == 'c') {
+                    continueSteps();
+                } else if (c == 's') {
+                    int stepsNum = scanner.nextInt();
+                    doSteps(stepsNum);
+                } else if (c == 'd') {
+                    int levelsUp = scanner.nextInt();
+                    display(levelsUp);
+                } else if (c == 'e') {
+                    System.out.println("Exiting debugger");
+                    break;
+                } else if (c == 'm') {
+                    String outFilePath;
+                    outFilePath = scanner.next();
+                    dump(outFilePath);
+                } else {
+                    System.out.println("Wrong command name");
+                    break;
+                }
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }
