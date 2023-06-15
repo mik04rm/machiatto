@@ -44,6 +44,7 @@ public class Main {
 
     }
 
+    //Program from First Task statement.
     static Block prog_pierwsze() {
         VarDeclaration dn = new VarDeclaration('n', new Value(30));
 
@@ -88,6 +89,7 @@ public class Main {
                 .build();
     }
 
+    //Program from Second Task statement.
     static Block progWithBuilder2() {
         return new BlockBuilder()
                 .declareVariable('x', Value.of(101))
@@ -119,19 +121,20 @@ public class Main {
     }
 
     public static void main(String[] args) {
+//        Block pr = progWithBuilder2();
+//        Debugger dbg = new Debugger(pr);
+//        dbg.continueSteps();
 
 //        Block xd = xd();
 //        Debugger dbg = new Debugger(xd);
-////        dbg.run();
 //        dbg.continueSteps();
 
 //        Block prog_pierwsze = prog_pierwsze();
 //        Debugger dbg = new Debugger(prog_pierwsze);
-////        dbg.run();
 //        dbg.continueSteps();
 
-        Block progg = progWithBuilder2();
-        Debugger dbg = new Debugger(progg);
-        dbg.continueSteps();
+//        Block progg = progWithBuilder2();
+//        Debugger dbg = new Debugger(progg);
+//        dbg.continueSteps();
     }
 }

@@ -18,7 +18,6 @@ public class ProcedureCall extends Instruction {
         Instruction procInstr = blockRef.getProcedureInstruction(name);
         char[] procedureArgNames = blockRef.getProcedureArgNames(name);
         assert argExpr.length == procedureArgNames.length;
-        //TODO wypadałoby jakiś wyjątek rzucić?
 
         int argNum = argExpr.length;
         VarDeclaration[] argDeclarations = new VarDeclaration[argNum];
