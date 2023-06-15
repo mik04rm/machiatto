@@ -2,6 +2,7 @@ package instructions;
 
 import runtime.Debugger;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public class Block extends Instruction {
     private final Map<String, char[]> procedureArgNames;
 
     public boolean varExists(char name) {
-        return varBlockRefs[name] != null;
+        return varBlockRefs[name - 'a'] != null;
     }
 
     public int getVarValue(char name) {
@@ -34,8 +35,12 @@ public class Block extends Instruction {
     protected Instruction getProcedureInstruction(String name) {
         return procedureBlockRefs.get(name).procedureInstructions.get(name);
     }
-    protected char[] getProcedureArgNames(String name) {
+    public char[] getProcedureArgNames(String name) {
         return procedureBlockRefs.get(name).procedureArgNames.get(name);
+    }
+
+    public Collection<String> getProceduresNames() {
+        return procedureBlockRefs.keySet();
     }
 
     //index of the block sub-instruction which will be returned next by 'exec'

@@ -120,10 +120,20 @@ public class Main {
                 .build();
     }
 
+    static Block xdd() {
+        return new BlockBuilder()
+                .declareProcedure("p", new char[]{ 'a', 'b' }, new BlockBuilder().build())
+                .block(new BlockBuilder()
+                        .declareProcedure("p", new char[]{ 'x', 'y', 'z' }, new BlockBuilder().build())
+                        .build()
+                )
+                .build();
+    }
+
     public static void main(String[] args) {
-//        Block pr = progWithBuilder2();
-//        Debugger dbg = new Debugger(pr);
-//        dbg.continueSteps();
+        Block pr = progWithBuilder2();
+        Debugger dbg = new Debugger(pr);
+        dbg.run();
 
 //        Block xd = xd();
 //        Debugger dbg = new Debugger(xd);
