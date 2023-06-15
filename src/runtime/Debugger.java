@@ -67,7 +67,7 @@ public class Debugger {
                 return;
             }
         }
-        System.out.println("All steps done. ");
+        System.out.println("All steps done.");
     }
 
     /*
